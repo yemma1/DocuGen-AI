@@ -1,0 +1,511 @@
+{
+  "file_id": "28bbb020c98f",
+  "filename": "sample_pipeline.py",
+  "file_size_bytes": 2765,
+  "file_size_formatted": "2.7 KB",
+  "analyzed_at": "2026-11-20 14:30:42",
+  "syntax": {
+    "is_valid": true,
+    "error_message": null,
+    "error_line": null,
+    "error_column": null,
+    "error_text": null
+  },
+  "metrics": {
+    "total_lines": 71,
+    "code_lines": 58,
+    "blank_lines": 13,
+    "comment_lines": 0,
+    "total_functions": 8,
+    "total_classes": 2,
+    "total_imports": 4,
+    "total_globals": 4
+  },
+  "functions": [
+    {
+      "name": "calculate_statistical_variance",
+      "parameters": [
+        {
+          "name": "numbers",
+          "type_annotation": "List[float]",
+          "default_value": null,
+          "kind": "positional_only",
+          "description": "Represents the 'numbers' input parameter. (Expected type: List[float] - decimal number)."
+        },
+        {
+          "name": "sample",
+          "type_annotation": "bool",
+          "default_value": "True",
+          "kind": "positional_or_keyword",
+          "description": "Represents the 'sample' input parameter. (Expected type: bool - boolean flag (True or False)). Defaults to `True` if omitted."
+        },
+        {
+          "name": "precision",
+          "type_annotation": "int",
+          "default_value": "4",
+          "kind": "keyword_only",
+          "description": "Represents the 'precision' input parameter. (Expected type: int - integer number). Defaults to `4` if omitted."
+        }
+      ],
+      "return_annotation": "float",
+      "detected_returns": [
+        "0.0",
+        "round(sum(((x - mean_val) ** 2 for x in numbers)) / denom, precision)"
+      ],
+      "docstring": "Calculate variance of a sequence of floating-point numbers.",
+      "decorators": [],
+      "line_start": 59,
+      "line_end": 65,
+      "is_async": false,
+      "is_method": false,
+      "parent_class": null,
+      "nested_functions": [],
+      "explanation": "Calculate variance of a sequence of floating-point numbers."
+    },
+    {
+      "name": "fetch_remote_metrics",
+      "parameters": [
+        {
+          "name": "endpoint",
+          "type_annotation": "str",
+          "default_value": null,
+          "kind": "positional_or_keyword",
+          "description": "Represents the 'endpoint' input parameter. (Expected type: str - text string)."
+        },
+        {
+          "name": "timeout",
+          "type_annotation": "float",
+          "default_value": "DEFAULT_TIMEOUT",
+          "kind": "positional_or_keyword",
+          "description": "Maximum duration (in seconds) to wait before timing out. (Expected type: float - decimal number). Defaults to `DEFAULT_TIMEOUT` if omitted."
+        },
+        {
+          "name": "*tags",
+          "type_annotation": "str",
+          "default_value": null,
+          "kind": "var_positional",
+          "description": "Represents the 'tags' input parameter. (Expected type: str - text string)."
+        },
+        {
+          "name": "**params",
+          "type_annotation": "Any",
+          "default_value": null,
+          "kind": "var_keyword",
+          "description": "Represents the 'params' input parameter. (Expected type: Any - value of any datatype)."
+        }
+      ],
+      "return_annotation": "Dict[str, Any]",
+      "detected_returns": [
+        "{'status': 200, 'endpoint': endpoint, 'tags': [sanitize(t) for t in tags], 'params': params}"
+      ],
+      "docstring": "Asynchronously fetch remote metrics.",
+      "decorators": [],
+      "line_start": 67,
+      "line_end": 71,
+      "is_async": true,
+      "is_method": false,
+      "parent_class": null,
+      "nested_functions": [
+        "sanitize"
+      ],
+      "explanation": "Asynchronously fetch remote metrics."
+    }
+  ],
+  "classes": [
+    {
+      "name": "BaseEntity",
+      "bases": [],
+      "docstring": "Base entity providing identification and state tracking.",
+      "decorators": [],
+      "line_start": 16,
+      "line_end": 32,
+      "methods": [
+        {
+          "name": "__init__",
+          "parameters": [
+            {
+              "name": "self",
+              "type_annotation": null,
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "Reference to the current instance of the class.."
+            },
+            {
+              "name": "entity_id",
+              "type_annotation": "str",
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "Represents the 'entity id' input parameter. (Expected type: str - text string)."
+            },
+            {
+              "name": "name",
+              "type_annotation": "str",
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "The identifier or display name. (Expected type: str - text string)."
+            }
+          ],
+          "return_annotation": "None",
+          "detected_returns": [],
+          "docstring": "Initialize base entity with unique identifier.",
+          "decorators": [],
+          "line_start": 19,
+          "line_end": 23,
+          "is_async": false,
+          "is_method": true,
+          "parent_class": "BaseEntity",
+          "nested_functions": [],
+          "explanation": "Initialize base entity with unique identifier."
+        },
+        {
+          "name": "get_display_name",
+          "parameters": [
+            {
+              "name": "self",
+              "type_annotation": null,
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "Reference to the current instance of the class.."
+            }
+          ],
+          "return_annotation": "str",
+          "detected_returns": [
+            "f'[{self.entity_id}] {self.name}'"
+          ],
+          "docstring": "Return formatted display name.",
+          "decorators": [],
+          "line_start": 25,
+          "line_end": 27,
+          "is_async": false,
+          "is_method": true,
+          "parent_class": "BaseEntity",
+          "nested_functions": [],
+          "explanation": "Return formatted display name."
+        },
+        {
+          "name": "deactivate",
+          "parameters": [
+            {
+              "name": "self",
+              "type_annotation": null,
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "Reference to the current instance of the class.."
+            }
+          ],
+          "return_annotation": "bool",
+          "detected_returns": [
+            "self.is_active"
+          ],
+          "docstring": "Deactivate entity.",
+          "decorators": [],
+          "line_start": 29,
+          "line_end": 32,
+          "is_async": false,
+          "is_method": true,
+          "parent_class": "BaseEntity",
+          "nested_functions": [],
+          "explanation": "Deactivate entity."
+        }
+      ],
+      "constructor": {
+        "name": "__init__",
+        "parameters": [
+          {
+            "name": "self",
+            "type_annotation": null,
+            "default_value": null,
+            "kind": "positional_or_keyword",
+            "description": "Reference to the current instance of the class.."
+          },
+          {
+            "name": "entity_id",
+            "type_annotation": "str",
+            "default_value": null,
+            "kind": "positional_or_keyword",
+            "description": "Represents the 'entity id' input parameter. (Expected type: str - text string)."
+          },
+          {
+            "name": "name",
+            "type_annotation": "str",
+            "default_value": null,
+            "kind": "positional_or_keyword",
+            "description": "The identifier or display name. (Expected type: str - text string)."
+          }
+        ],
+        "return_annotation": "None",
+        "detected_returns": [],
+        "docstring": "Initialize base entity with unique identifier.",
+        "decorators": [],
+        "line_start": 19,
+        "line_end": 23,
+        "is_async": false,
+        "is_method": true,
+        "parent_class": "BaseEntity",
+        "nested_functions": [],
+        "explanation": "Initialize base entity with unique identifier."
+      },
+      "nested_classes": [],
+      "explanation": "Base entity providing identification and state tracking."
+    },
+    {
+      "name": "DataPipeline",
+      "bases": [
+        "BaseEntity"
+      ],
+      "docstring": "Data pipeline orchestrator capable of staging and batching data records.",
+      "decorators": [],
+      "line_start": 34,
+      "line_end": 57,
+      "methods": [
+        {
+          "name": "__init__",
+          "parameters": [
+            {
+              "name": "self",
+              "type_annotation": null,
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "Reference to the current instance of the class.."
+            },
+            {
+              "name": "pipeline_id",
+              "type_annotation": "str",
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "Represents the 'pipeline id' input parameter. (Expected type: str - text string)."
+            },
+            {
+              "name": "name",
+              "type_annotation": "str",
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "The identifier or display name. (Expected type: str - text string)."
+            },
+            {
+              "name": "buffer_size",
+              "type_annotation": "int",
+              "default_value": "100",
+              "kind": "positional_or_keyword",
+              "description": "Represents the 'buffer size' input parameter. (Expected type: int - integer number). Defaults to `100` if omitted."
+            }
+          ],
+          "return_annotation": "None",
+          "detected_returns": [],
+          "docstring": null,
+          "decorators": [],
+          "line_start": 42,
+          "line_end": 45,
+          "is_async": false,
+          "is_method": true,
+          "parent_class": "DataPipeline",
+          "nested_functions": [],
+          "explanation": "Initializes setup for required operation. Returns a value of type `None`."
+        },
+        {
+          "name": "add_record",
+          "parameters": [
+            {
+              "name": "self",
+              "type_annotation": null,
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "Reference to the current instance of the class.."
+            },
+            {
+              "name": "record",
+              "type_annotation": "Dict[str, Any]",
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "Represents the 'record' input parameter. (Expected type: Dict[str, Any] - text string)."
+            }
+          ],
+          "return_annotation": "int",
+          "detected_returns": [
+            "len(self.records)"
+          ],
+          "docstring": "Add record to buffer and return count.",
+          "decorators": [],
+          "line_start": 47,
+          "line_end": 50,
+          "is_async": false,
+          "is_method": true,
+          "parent_class": "DataPipeline",
+          "nested_functions": [],
+          "explanation": "Add record to buffer and return count."
+        },
+        {
+          "name": "compute_summary_statistics",
+          "parameters": [
+            {
+              "name": "self",
+              "type_annotation": null,
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "Reference to the current instance of the class.."
+            },
+            {
+              "name": "key",
+              "type_annotation": "str",
+              "default_value": null,
+              "kind": "positional_or_keyword",
+              "description": "Lookup key or hash map index. (Expected type: str - text string)."
+            }
+          ],
+          "return_annotation": "Dict[str, float]",
+          "detected_returns": [
+            "{'count': 0.0, 'average': 0.0, 'max': 0.0}",
+            "{'count': float(len(values)), 'average': sum(values) / len(values), 'max': float(max(values))}"
+          ],
+          "docstring": "Calculate average and maximum values.",
+          "decorators": [],
+          "line_start": 52,
+          "line_end": 57,
+          "is_async": false,
+          "is_method": true,
+          "parent_class": "DataPipeline",
+          "nested_functions": [],
+          "explanation": "Calculate average and maximum values."
+        }
+      ],
+      "constructor": {
+        "name": "__init__",
+        "parameters": [
+          {
+            "name": "self",
+            "type_annotation": null,
+            "default_value": null,
+            "kind": "positional_or_keyword",
+            "description": "Reference to the current instance of the class.."
+          },
+          {
+            "name": "pipeline_id",
+            "type_annotation": "str",
+            "default_value": null,
+            "kind": "positional_or_keyword",
+            "description": "Represents the 'pipeline id' input parameter. (Expected type: str - text string)."
+          },
+          {
+            "name": "name",
+            "type_annotation": "str",
+            "default_value": null,
+            "kind": "positional_or_keyword",
+            "description": "The identifier or display name. (Expected type: str - text string)."
+          },
+          {
+            "name": "buffer_size",
+            "type_annotation": "int",
+            "default_value": "100",
+            "kind": "positional_or_keyword",
+            "description": "Represents the 'buffer size' input parameter. (Expected type: int - integer number). Defaults to `100` if omitted."
+          }
+        ],
+        "return_annotation": "None",
+        "detected_returns": [],
+        "docstring": null,
+        "decorators": [],
+        "line_start": 42,
+        "line_end": 45,
+        "is_async": false,
+        "is_method": true,
+        "parent_class": "DataPipeline",
+        "nested_functions": [],
+        "explanation": "Initializes setup for required operation. Returns a value of type `None`."
+      },
+      "nested_classes": [
+        "MetricsTracker"
+      ],
+      "explanation": "Data pipeline orchestrator capable of staging and batching data records."
+    }
+  ],
+  "imports": [
+    {
+      "module": "math",
+      "imported_names": [],
+      "alias": null,
+      "lineno": 6,
+      "is_from": false,
+      "purpose": "Mathematical functions, trigonometry, logarithms, and constants."
+    },
+    {
+      "module": "typing",
+      "imported_names": [
+        "List",
+        "Dict",
+        "Optional",
+        "Any"
+      ],
+      "alias": null,
+      "lineno": 7,
+      "is_from": true,
+      "purpose": "Type hints and type annotations for static analysis and IDE support."
+    },
+    {
+      "module": "pathlib",
+      "imported_names": [
+        "Path"
+      ],
+      "alias": null,
+      "lineno": 8,
+      "is_from": true,
+      "purpose": "Object-oriented filesystem paths and directory management."
+    },
+    {
+      "module": "logging",
+      "imported_names": [],
+      "alias": null,
+      "lineno": 9,
+      "is_from": false,
+      "purpose": "Flexible event logging and diagnostic message formatting."
+    }
+  ],
+  "global_variables": [
+    {
+      "name": "MODULE_VERSION",
+      "type_annotation": "str",
+      "value_preview": "'2.4.0'",
+      "lineno": 11
+    },
+    {
+      "name": "DEFAULT_TIMEOUT",
+      "type_annotation": "float",
+      "value_preview": "30.0",
+      "lineno": 12
+    },
+    {
+      "name": "MAX_BATCH_SIZE",
+      "type_annotation": "int",
+      "value_preview": "500",
+      "lineno": 13
+    },
+    {
+      "name": "GLOBAL_CACHE",
+      "type_annotation": "Dict[str, Any]",
+      "value_preview": "{}",
+      "lineno": 14
+    }
+  ],
+  "explanation": {
+    "module_summary": "**sample_pipeline.py** is a Python module designed to: DocuGen Sample Module: Advanced Data Processing Engine Demonstrates comprehensive Python language constructs for AST static analysis.\n\nArchitecturally, this file defines **2 class(es)** (`BaseEntity`, `DataPipeline`) and provides **2 standalone function(s)** (`calculate_statistical_variance`, `fetch_remote_metrics`) to organize business logic.\n\nFor its runtime dependencies, the module relies on `logging`, `math`, `pathlib`, `typing` to perform standard operations, static interactions, and data processing.",
+    "function_explanations": {
+      "calculate_statistical_variance": "Calculate variance of a sequence of floating-point numbers.",
+      "fetch_remote_metrics": "Asynchronously fetch remote metrics.",
+      "BaseEntity.__init__": "Initialize base entity with unique identifier.",
+      "BaseEntity.get_display_name": "Return formatted display name.",
+      "BaseEntity.deactivate": "Deactivate entity.",
+      "DataPipeline.__init__": "Initializes setup for required operation. Returns a value of type `None`.",
+      "DataPipeline.add_record": "Add record to buffer and return count.",
+      "DataPipeline.compute_summary_statistics": "Calculate average and maximum values."
+    },
+    "class_explanations": {
+      "BaseEntity": "Base entity providing identification and state tracking.",
+      "DataPipeline": "Data pipeline orchestrator capable of staging and batching data records."
+    },
+    "general_insights": [
+      "The file defines 8 total functions and 2 classes across 71 lines.",
+      "Maintains 58 lines of code and 0 comment lines.",
+      "Incorporates 4 external or standard module imports."
+    ],
+    "ai_generated": false
+  }
+}

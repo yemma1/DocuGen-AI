@@ -1,0 +1,65 @@
+{
+  "5fc49afe5a90": {
+    "file_id": "5fc49afe5a90",
+    "filename": "upload.py",
+    "saved_filename": "5fc49afe5a90_upload.py",
+    "file_size_bytes": 1458,
+    "file_size_formatted": "1.4 KB",
+    "uploaded_at": "2026-11-20 14:11:56",
+    "is_analyzed": true,
+    "has_doc": true,
+    "syntax_valid": true,
+    "metrics": {
+      "total_lines": 39,
+      "code_lines": 36,
+      "blank_lines": 3,
+      "comment_lines": 0,
+      "total_functions": 1,
+      "total_classes": 0,
+      "total_imports": 4,
+      "total_globals": 2
+    }
+  },
+  "24b0096fdc1c": {
+    "file_id": "24b0096fdc1c",
+    "filename": "sample.py",
+    "saved_filename": "24b0096fdc1c_sample.py",
+    "file_size_bytes": 4359,
+    "file_size_formatted": "4.3 KB",
+    "uploaded_at": "2026-11-20 14:16:46",
+    "is_analyzed": true,
+    "has_doc": true,
+    "syntax_valid": true,
+    "metrics": {
+      "total_lines": 131,
+      "code_lines": 110,
+      "blank_lines": 19,
+      "comment_lines": 2,
+      "total_functions": 10,
+      "total_classes": 2,
+      "total_imports": 4,
+      "total_globals": 4
+    }
+  },
+  "28bbb020c98f": {
+    "file_id": "28bbb020c98f",
+    "filename": "sample_pipeline.py",
+    "saved_filename": "28bbb020c98f_sample_pipeline.py",
+    "file_size_bytes": 2765,
+    "file_size_formatted": "2.7 KB",
+    "uploaded_at": "2026-11-20 14:30:42",
+    "is_analyzed": true,
+    "has_doc": true,
+    "syntax_valid": true,
+    "metrics": {
+      "total_lines": 71,
+      "code_lines": 58,
+      "blank_lines": 13,
+      "comment_lines": 0,
+      "total_functions": 8,
+      "total_classes": 2,
+      "total_imports": 4,
+      "total_globals": 4
+    }
+  }
+}

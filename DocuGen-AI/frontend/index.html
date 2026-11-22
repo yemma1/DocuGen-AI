@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocuGen AI - Python Code Documentation Generator</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom Modern SaaS Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <i class="bi bi-file-earmark-code"></i>
+        </div>
+        <div>
+          <div class="brand-title">DocuGen AI</div>
+          <div class="text-muted" style="font-size:0.75rem;">Python Doc Engine</div>
+        </div>
+        <span class="brand-badge">v1.0</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-view="dashboard">
+          <i class="bi bi-grid-1x2"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" data-view="upload">
+          <i class="bi bi-cloud-arrow-up"></i>
+          <span>Upload Python File</span>
+        </a>
+        <a class="nav-item" data-view="analysis">
+          <i class="bi bi-cpu"></i>
+          <span>Code Analysis</span>
+        </a>
+        <a class="nav-item" data-view="documentation">
+          <i class="bi bi-file-earmark-text"></i>
+          <span>Generated Docs</span>
+        </a>
+        <a class="nav-item" data-view="download">
+          <i class="bi bi-download"></i>
+          <span>Download Docs</span>
+        </a>
+        <a class="nav-item" data-view="about">
+          <i class="bi bi-info-circle"></i>
+          <span>About Project</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between mb-1">
+          <span class="fw-semibold">FastAPI Engine</span>
+          <a href="/docs" target="_blank" title="Open Swagger Documentation">
+            <i class="bi bi-box-arrow-up-right"></i> Swagger
+          </a>
+        </div>
+        <div class="text-muted" style="font-size:0.72rem;">Safe AST Static Analysis</div>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Top Header -->
+      <header class="top-navbar">
+        <button class="nav-toggle-btn" id="nav-toggle-btn" aria-label="Toggle Navigation">
+          <i class="bi bi-list"></i>
+        </button>
+
+        <div class="header-status-badge" id="header-health-badge">
+          <span class="status-dot"></span>
+          <span>FastAPI Online • AST Engine Ready</span>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-outline btn-sm" id="btn-load-sample" title="Instant test with built-in comprehensive sample code">
+            <i class="bi bi-lightning-charge text-warning"></i> Try Sample File
+          </button>
+          <a href="/docs" target="_blank" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-journal-code"></i> API Docs
+          </a>
+        </div>
+      </header>
+
+      <!-- Content Body -->
+      <main class="content-body">
+        
+        <!-- ================= VIEW 1: DASHBOARD ================= -->
+        <section class="view-section active" id="view-dashboard">
+          <div class="page-header d-flex justify-content-between align-items-center">
+            <div>
+              <h1 class="page-title">Documentation Workspace</h1>
+              <p class="page-subtitle">Automated Python AST static code analysis, beginner-friendly explanations & Markdown generator</p>
+            </div>
+            <button class="btn btn-primary" onclick="switchView('upload')">
+              <i class="bi bi-plus-lg"></i> Upload Source File
+            </button>
+          </div>
+
+          <!-- Top Stats Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-blue">
+                <i class="bi bi-file-earmark-code"></i>
+              </div>
+              <div class="stat-details">
+                <div class="stat-value" id="stat-total-files">0</div>
+                <div class="stat-label">Uploaded Files</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-indigo">
+                <i class="bi bi-code-slash"></i>
+              </div>
+              <div class="stat-details">
+                <div class="stat-value" id="stat-total-lines">0</div>
+                <div class="stat-label">Total Lines Analyzed</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-cyan">
+                <i class="bi bi-lightning-charge"></i>
+              </div>
+              <div class="stat-details">
+                <div class="stat-value" id="stat-total-funcs">0</div>
+                <div class="stat-label">Documented Functions</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-amber">
+                <i class="bi bi-diagram-3"></i>
+              </div>
+              <div class="stat-details">
+                <div class="stat-value" id="stat-total-classes">0</div>
+                <div class="stat-label">Documented Classes</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Files Card -->
+          <div class="card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="card-title mb-0">
+                <i class="bi bi-clock-history text-primary"></i> Uploaded Python Files
+              </h2>
+              <button class="btn btn-outline btn-sm" onclick="loadFilesList()">
+                <i class="bi bi-arrow-clockwise"></i> Refresh
+              </button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Filename</th>
+                    <th>Size</th>
+                    <th>Uploaded</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="files-table-body">
+                  <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">
+                      Loading files...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 2: UPLOAD FILE ================= -->
+        <section class="view-section" id="view-upload">
+          <div class="page-header">
+            <h1 class="page-title">Upload Python File</h1>
+            <p class="page-subtitle">Upload any .py file to parse AST nodes, extract components, and generate technical documentation</p>
+          </div>
+
+          <div class="card">
+            <!-- Drag and Drop Dropzone -->
+            <div class="upload-dropzone" id="upload-dropzone">
+              <div class="upload-icon">
+                <i class="bi bi-cloud-arrow-up"></i>
+              </div>
+              <div class="upload-text-main">Drag & Drop your Python (.py) file here</div>
+              <div class="upload-text-sub">Maximum file size: 5 MB • Safe static analysis without execution</div>
+              <button class="btn btn-primary" type="button" onclick="document.getElementById('file-input').click()">
+                <i class="bi bi-folder2-open"></i> Browse Files
+              </button>
+              <button class="btn btn-outline btn-sm ms-2" type="button" id="btn-load-sample-2">
+                <i class="bi bi-lightning-charge text-warning"></i> Load Sample File
+              </button>
+              <input type="file" id="file-input" class="file-input-hidden" accept=".py">
+            </div>
+
+            <!-- Upload Progress Indicator -->
+            <div class="progress-card" id="upload-progress-card">
+              <div class="spinner"></div>
+              <div class="progress-text" id="upload-progress-text">Processing Source Code...</div>
+              <div class="progress-subtext" id="upload-progress-subtext">Executing AST parsing and explanation engine</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 3: CODE ANALYSIS ================= -->
+        <section class="view-section" id="view-analysis">
+          <div class="page-header d-flex justify-content-between align-items-center">
+            <div>
+              <h1 class="page-title">AST Code Analysis</h1>
+              <p class="page-subtitle">Static code inspection results for: <strong class="text-primary" id="analysis-file-name">None Selected</strong></p>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-primary btn-sm" onclick="switchView('documentation')">
+                <i class="bi bi-file-earmark-text"></i> View Generated Docs
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="switchView('download')">
+                <i class="bi bi-download"></i> Download .md
+              </button>
+            </div>
+          </div>
+
+          <!-- Syntax Validation Alert -->
+          <div id="analysis-syntax-banner" class="syntax-banner valid">
+            <span class="fs-4">✅</span>
+            <div>
+              <strong>Python Syntax Valid</strong> — Abstract Syntax Tree (AST) verified with zero syntax errors.
+            </div>
+          </div>
+
+          <!-- 4 Main Statistics Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-blue">
+                <i class="bi bi-text-paragraph"></i>
+              </div>
+              <div class="stat-details">
+                <div class="stat-value" id="metric-lines">0</div>
+                <div class="stat-label">Total Lines</div>
+                <div class="stat-badge" id="metric-lines-sub">0 code • 0 comments</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-indigo">
+                <i class="bi bi-lightning-charge"></i>
+              </div>
+              <div class="stat-details">
+                <div class="stat-value" id="metric-funcs">0</div>
+                <div class="stat-label">Total Functions</div>
+                <div class="stat-badge">Standalone + Methods</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-cyan">
+                <i class="bi bi-diagram-3"></i>
+              </div>
+              <div class="stat-details">
+                <div class="stat-value" id="metric-classes">0</div>
+                <div class="stat-label">Total Classes</div>
+                <div class="stat-badge">Object-Oriented Entities</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper stat-icon-amber">
+                <i class="bi bi-box-seam"></i>
+              </div>
+              <div class="stat-details">
+                <div class="stat-value" id="metric-imports">0</div>
+                <div class="stat-label">Total Imports</div>
+                <div class="stat-badge">Dependencies & Libraries</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simple English Code Explanation Card -->
+          <div class="card">
+            <h2 class="card-title">
+              <i class="bi bi-chat-left-quote text-primary"></i> Simple English Code Explanation
+            </h2>
+            <div id="explanation-module-summary" class="mb-3 text-secondary lh-base" style="font-size:0.95rem;">
+              Upload or select a file to view beginner-friendly explanations.
+            </div>
+            <div class="bg-light p-3 rounded border">
+              <div class="fw-semibold text-dark mb-2" style="font-size:0.88rem;">Key Architectural Insights:</div>
+              <ul id="explanation-insights-list" class="ps-3 text-muted small mb-0">
+                <li>Analysis results will appear here once a file is processed.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Functions Table Card -->
+          <div class="card">
+            <h2 class="card-title">
+              <i class="bi bi-braces text-primary"></i> Function & Routine Specifications
+            </h2>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Function Name</th>
+                    <th>Parameters</th>
+                    <th>Return Type</th>
+                    <th>Line Numbers</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="functions-table-body">
+                  <tr><td colspan="5" class="text-center py-3 text-muted">No functions to display.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Classes Table Card -->
+          <div class="card">
+            <h2 class="card-title">
+              <i class="bi bi-diagram-3 text-primary"></i> Class Hierarchy & Methods
+            </h2>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Class Name</th>
+                    <th>Inheritance</th>
+                    <th>Methods Count</th>
+                    <th>Methods</th>
+                    <th>Line Numbers</th>
+                  </tr>
+                </thead>
+                <tbody id="classes-table-body">
+                  <tr><td colspan="5" class="text-center py-3 text-muted">No classes to display.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Imports Table Card -->
+          <div class="card">
+            <h2 class="card-title">
+              <i class="bi bi-box-seam text-primary"></i> Imports & Dependencies
+            </h2>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Statement</th>
+                    <th>Module</th>
+                    <th>Line Number</th>
+                    <th>Purpose / Usage</th>
+                  </tr>
+                </thead>
+                <tbody id="imports-table-body">
+                  <tr><td colspan="4" class="text-center py-3 text-muted">No imports to display.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Global Variables Table Card -->
+          <div class="card">
+            <h2 class="card-title">
+              <i class="bi bi-globe text-primary"></i> Global Variables & Constants
+            </h2>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Variable Name</th>
+                    <th>Type Annotation</th>
+                    <th>Initial Value Preview</th>
+                    <th>Line</th>
+                  </tr>
+                </thead>
+                <tbody id="globals-table-body">
+                  <tr><td colspan="4" class="text-center py-3 text-muted">No global variables to display.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Code Structure Tree Card -->
+          <div class="card">
+            <h2 class="card-title">
+              <i class="bi bi-folder-symlink text-primary"></i> Code Structure Hierarchy
+            </h2>
+            <div class="code-container">
+              <pre id="structure-tree-content">No structure available.</pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 4: GENERATED DOCUMENTATION ================= -->
+        <section class="view-section" id="view-documentation">
+          <div class="page-header d-flex justify-content-between align-items-center">
+            <div>
+              <h1 class="page-title">Generated Documentation</h1>
+              <p class="page-subtitle">Standardized 10-section technical documentation ready for review and export</p>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-primary btn-sm" onclick="copyMarkdownToClipboard()">
+                <i class="bi bi-clipboard"></i> Copy Markdown
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="switchView('download')">
+                <i class="bi bi-download"></i> Download .md
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <!-- Documentation Subtabs -->
+            <div class="nav-tabs-custom">
+              <button class="tab-btn doc-subtab-btn active" data-mode="rendered">
+                <i class="bi bi-eye"></i> Rendered Preview
+              </button>
+              <button class="tab-btn doc-subtab-btn" data-mode="raw">
+                <i class="bi bi-code-slash"></i> Raw Markdown Source
+              </button>
+            </div>
+
+            <!-- Tab 1: Rendered HTML -->
+            <div id="doc-tab-rendered">
+              <div class="markdown-preview" id="doc-preview-container">
+                <p class="text-muted">Please analyze a Python file to view generated documentation.</p>
+              </div>
+            </div>
+
+            <!-- Tab 2: Raw Markdown Source -->
+            <div id="doc-tab-raw" style="display:none;">
+              <div class="code-container">
+                <pre id="doc-raw-content"># No documentation available.</pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 5: DOWNLOAD DOCUMENTATION ================= -->
+        <section class="view-section" id="view-download">
+          <div class="page-header">
+            <h1 class="page-title">Download Documentation</h1>
+            <p class="page-subtitle">Export generated Markdown documentation to your local development machine</p>
+          </div>
+
+          <div class="card text-center py-5">
+            <div style="font-size: 3.5rem; color: var(--primary); margin-bottom: 1rem;">
+              <i class="bi bi-file-earmark-arrow-down"></i>
+            </div>
+            <h2 class="fs-4 fw-bold text-dark mb-2" id="download-view-filename">file_documentation.md</h2>
+            <p class="text-muted mb-4">Complete 10-section professional Markdown document generated by DocuGen AI</p>
+
+            <div class="d-flex justify-content-center gap-3">
+              <a href="#" id="download-view-btn" class="btn btn-primary btn-lg" download>
+                <i class="bi bi-download"></i> Download Markdown (.md)
+              </a>
+              <button class="btn btn-outline btn-lg" onclick="copyMarkdownToClipboard()">
+                <i class="bi bi-clipboard"></i> Copy to Clipboard
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= VIEW 6: ABOUT ================= -->
+        <section class="view-section" id="view-about">
+          <div class="page-header">
+            <h1 class="page-title">About DocuGen AI</h1>
+            <p class="page-subtitle">Production-ready Python AST Code Documentation Platform</p>
+          </div>
+
+          <div class="card mb-4">
+            <h2 class="card-title">
+              <i class="bi bi-stars text-primary"></i> Project Overview
+            </h2>
+            <p class="lh-base text-secondary">
+              <strong>DocuGen AI</strong> is a full-stack developer tooling platform built using <strong>FastAPI</strong>, 
+              <strong>Python Abstract Syntax Tree (AST)</strong> static analysis, and an intelligent English translation engine. 
+              It provides developers, students, and code reviewers with immediate, deep insights into any Python source file 
+              without executing arbitrary code or exposing environments to security risks.
+            </p>
+          </div>
+
+          <div class="row g-4" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+            <!-- Tech Stack Card -->
+            <div class="card mb-0">
+              <h2 class="card-title">
+                <i class="bi bi-layers text-primary"></i> Technology Architecture
+              </h2>
+              <ul class="text-secondary small lh-lg ps-3 mb-0">
+                <li><strong>Backend:</strong> Python 3.11+, FastAPI (ASGI), Uvicorn, Pydantic v2</li>
+                <li><strong>Static Analysis:</strong> Python standard <code>ast</code> module without code execution</li>
+                <li><strong>Frontend:</strong> Modern HTML5, Responsive CSS3, Vanilla ES6 JavaScript</li>
+                <li><strong>Design System:</strong> Custom SaaS Light-Blue Palette, Rounded Cards, Soft Shadows</li>
+                <li><strong>Documentation Engine:</strong> Automated 10-Section Markdown Generator</li>
+                <li><strong>API Specification:</strong> OpenAPI 3.1 / Swagger UI live at <code>/docs</code></li>
+              </ul>
+            </div>
+
+            <!-- Features Checklist -->
+            <div class="card mb-0">
+              <h2 class="card-title">
+                <i class="bi bi-shield-check text-success"></i> Security & Integrity
+              </h2>
+              <ul class="text-secondary small lh-lg ps-3 mb-0">
+                <li><strong>Safe Static Analysis:</strong> Source code is parsed into an AST tree; never executed.</li>
+                <li><strong>Strict Upload Validation:</strong> Enforces <code>.py</code> extension and 5 MB size limits.</li>
+                <li><strong>Sanitized Storage:</strong> Path traversal prevention and UUID-isolated file handling.</li>
+                <li><strong>Zero Paid Dependency:</strong> Operates 100% offline via built-in rule-based explanation.</li>
+                <li><strong>Optional AI Hook:</strong> Graceful OpenAI integration if API key is provided.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Function Details Modal / Dialog -->
+  <div id="function-details-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.6); z-index:99999; backdrop-filter:blur(2px);">
+    <div style="background:#fff; max-width:600px; margin:5% auto; padding:2rem; border-radius:14px; position:relative; max-height:85vh; overflow-y:auto; box-shadow:0 20px 40px rgba(0,0,0,0.2);">
+      <button onclick="document.getElementById('function-details-modal').style.display='none'" style="position:absolute; top:1.25rem; right:1.25rem; border:none; background:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+      <div id="function-details-container"></div>
+    </div>
+  </div>
+
+  <!-- Application Script -->
+  <script src="/static/js/script.js"></script>
+</body>
+</html>

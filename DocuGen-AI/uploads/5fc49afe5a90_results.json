@@ -1,0 +1,124 @@
+{
+  "file_id": "5fc49afe5a90",
+  "filename": "upload.py",
+  "file_size_bytes": 1458,
+  "file_size_formatted": "1.4 KB",
+  "analyzed_at": "2026-11-20 14:11:56",
+  "syntax": {
+    "is_valid": true,
+    "error_message": null,
+    "error_line": null,
+    "error_column": null,
+    "error_text": null
+  },
+  "metrics": {
+    "total_lines": 39,
+    "code_lines": 36,
+    "blank_lines": 3,
+    "comment_lines": 0,
+    "total_functions": 1,
+    "total_classes": 0,
+    "total_imports": 4,
+    "total_globals": 2
+  },
+  "functions": [
+    {
+      "name": "upload_file",
+      "parameters": [
+        {
+          "name": "file",
+          "type_annotation": "UploadFile",
+          "default_value": "File(...)",
+          "kind": "positional_or_keyword",
+          "description": "Represents the 'file' input parameter. (Type: UploadFile). Defaults to `File(...)` if omitted."
+        }
+      ],
+      "return_annotation": null,
+      "detected_returns": [
+        "FileUploadResponse(file_id=record['file_id'], filename=record['filename'], file_size_bytes=record['file_size_bytes'], file_size_formatted=record['file_size_formatted'], uploaded_at=record['uploaded_at'], status='success', message=f\"File '{record['filename']}' successfully uploaded and validated.\")"
+      ],
+      "docstring": "Handle Python file upload with strict validation:\n- Enforces .py file extension\n- Rejects empty files (0 bytes)\n- Rejects files exceeding 5MB\n- Sanitizes filename to prevent directory traversal",
+      "decorators": [
+        "@router.post('/upload', response_model=FileUploadResponse, summary='Upload Python File', description='Upload a Python (.py) source file for static AST code analysis. Max size: 5MB.')"
+      ],
+      "line_start": 16,
+      "line_end": 39,
+      "is_async": true,
+      "is_method": false,
+      "parent_class": null,
+      "nested_functions": [],
+      "explanation": "Handle Python file upload with strict validation:\n- Enforces."
+    }
+  ],
+  "classes": [],
+  "imports": [
+    {
+      "module": "logging",
+      "imported_names": [],
+      "alias": null,
+      "lineno": 1,
+      "is_from": false,
+      "purpose": "Flexible event logging and diagnostic message formatting."
+    },
+    {
+      "module": "fastapi",
+      "imported_names": [
+        "APIRouter",
+        "UploadFile",
+        "File",
+        "HTTPException"
+      ],
+      "alias": null,
+      "lineno": 2,
+      "is_from": true,
+      "purpose": "Modern, high-performance web framework for building APIs."
+    },
+    {
+      "module": "app.models.schemas",
+      "imported_names": [
+        "FileUploadResponse"
+      ],
+      "alias": null,
+      "lineno": 3,
+      "is_from": true,
+      "purpose": null
+    },
+    {
+      "module": "app.utils.file_handler",
+      "imported_names": [
+        "save_upload_file"
+      ],
+      "alias": null,
+      "lineno": 4,
+      "is_from": true,
+      "purpose": null
+    }
+  ],
+  "global_variables": [
+    {
+      "name": "logger",
+      "type_annotation": null,
+      "value_preview": "logging.getLogger('docugen.routes.upload')",
+      "lineno": 6
+    },
+    {
+      "name": "router",
+      "type_annotation": null,
+      "value_preview": "APIRouter(prefix='/api', tags=['File Upload'])",
+      "lineno": 8
+    }
+  ],
+  "explanation": {
+    "module_summary": "**upload.py** is a Python module implementing `Upload` functionality. It comprises **39 lines of code** with a clean modular structure.\n\nArchitecturally, this file provides **1 standalone function(s)** (`upload_file`) to organize business logic.\n\nFor its runtime dependencies, the module relies on `app`, `fastapi`, `logging` to perform standard operations, static interactions, and data processing.",
+    "function_explanations": {
+      "upload_file": "Handle Python file upload with strict validation:\n- Enforces."
+    },
+    "class_explanations": {},
+    "general_insights": [
+      "The file defines 1 total functions and 0 classes across 39 lines.",
+      "Maintains 36 lines of code and 0 comment lines.",
+      "Incorporates 4 external or standard module imports."
+    ],
+    "ai_generated": false
+  }
+}
